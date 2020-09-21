@@ -23,6 +23,7 @@ header{
 }
 
 
+/* FORM STYLES */
 form{
     padding: 0.5rem;
     font-size: 2rem;
@@ -44,12 +45,12 @@ form button {
     padding: 0.5rem;
     font-size: 2rem;
     border: none;
+    outline:none;
     background-color: white;
 }
 
 
-
-
+/* TO DO CONTAINER/LIST STYLES */
 .to-do-container{
     display: flex;
     justify-content: center;
@@ -61,15 +62,32 @@ form button {
     list-style: none;
 }
 
+
+/* TO DO ELEMENTS STYLES */
 .to-do-box{
     margin: 0.5rem;
     font-size: 1.8rem;
-    border: none;
-    background: white;
 
+    background: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    transition: all 0.4s ease;
+    border-left: solid;
+    border-left-width: 6px;
+}
+
+.low{
+    border-left-color: rgb(42, 148, 26);
+}
+
+.medium{
+    border-left-color: rgb(230, 199, 28);
+}
+
+.high{
+    border-left-color: rgb(197, 43, 22);
 }
 
 .to-do-item{
@@ -82,10 +100,12 @@ form button {
 }
 
 
+/* BUTTONS STYLES */
 .delete-button,
-.complete-button{
+.complete-button,
+.priority-button{
     padding: 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     border: none;
     outline:none;
     background-color: white;
@@ -95,21 +115,35 @@ form button {
 }
 
 .delete-button:hover{
-    color: rgb(214, 84, 61);
+    color: rgb(197, 43, 22);
 }
 
 .complete-button:hover{
-    color: rgb(79, 173, 67);
+    color: rgb(42, 148, 26);
+}
+
+.priority-button:hover{
+    color: rgb(230, 199, 28);
 }
 
 
+/* ICONS STYLES */
 .fa-minus-circle,
-.fa-arrow-circle-right{
+.fa-check-circle,
+.fa-layer-group{
     pointer-events: none;
 }
 
 
+/* DONE TASK STYLES */
 .completed{
     text-decoration: line-through;
-    opacity: 0.5;
+    opacity: 0.6;
+}
+
+
+/* DELETED TASK STYLES */
+.deleted{
+    transform: translateX(3rem);
+    opacity: 0;
 }
