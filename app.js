@@ -8,28 +8,32 @@ button.addEventListener('click', addToDoTask);
 
 
 function addToDoTask(event){
-    event.preventDefault()
-    container.style.display = 'flex';
+    if (input.value != '')
+    {
+        event.preventDefault()
 
-    const todoDiv = document.getElementById("to-do");
-    todoDiv.style.display = 'block';
+        const todoBox = document.createElement('div')
+        todoBox.classList.add('to-do-box')
+        list.appendChild(todoBox)
+    
+        const todoTask = document.createElement('li')
+        todoTask.innerText = input.value;
+        todoTask.classList.add('to-do-item')
+        todoBox.appendChild(todoTask)
+    
+        const todoDelete = document.createElement('button')
+        todoDelete.innerHTML = '<i class="fas fa-minus-circle"></i>'
+        todoDelete.classList.add('delete-button')
+        todoBox.appendChild(todoDelete)
+    
+        const todoMove = document.createElement('button')
+        todoMove.innerHTML = '<i class="fas fa-arrow-circle-right"></i>'
+        todoMove.classList.add('move-button')
+        todoBox.appendChild(todoMove)
+    
+        input.value = '';
+    }
 
-    const todoTask = document.createElement('li')
-    todoTask.innerText = input.value;
-    todoTask.classList.add('to-do-item')
-    todoDiv.appendChild(todoTask)
-
-    const todoDelete = document.createElement('button')
-    todoDelete.innerHTML = '<i class="fas fa-minus-circle"></i>'
-    todoDelete.classList.add('delete-button')
-    todoTask.appendChild(todoDelete)
-
-    const todoMove = document.createElement('button')
-    todoMove.innerHTML = '<i class="fas fa-arrow-circle-right"></i>'
-    todoMove.classList.add('move-button')
-    todoTask.appendChild(todoMove)
-
-    input.value = '';
 
 
 

@@ -47,34 +47,23 @@ form button {
     background-color: white;
 }
 
-.to-do{
-    display: none;
-}
 
-.in-progress{
-    display: none;
-}
-
-.done{
-    display: none;
-}
 
 
 .to-do-container{
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .to-do-list{
-    min-width: 20%;
+    min-width: 35%;
     list-style: none;
 }
 
-.to-do{
-    padding: 0.5rem;
+.to-do-box{
     margin: 0.5rem;
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     border: none;
     background: white;
 
@@ -84,22 +73,19 @@ form button {
 }
 
 .to-do-item{
-    padding: 0rem 0.5rem;
+    padding: 0.5rem;
     background: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex: 1;
 }
 
-
-.to-do li{
-   flex: 1;
-}
 
 .delete-button,
 .move-button{
-    padding: 0.3rem;
-    font-size: 1.3rem;
+    padding: 0.5rem;
+    font-size: 1.5rem;
     border: none;
     outline:none;
     background-color: white;
@@ -107,7 +93,6 @@ form button {
     transition: all 0.4s;
     color: rgb(61, 90, 128);
 }
-
 
 .delete-button:hover,
 .move-button:hover{
