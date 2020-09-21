@@ -83,7 +83,7 @@ form button {
 
 
 .delete-button,
-.move-button{
+.complete-button{
     padding: 0.5rem;
     font-size: 1.5rem;
     border: none;
@@ -94,7 +94,22 @@ form button {
     color: rgb(61, 90, 128);
 }
 
-.delete-button:hover,
-.move-button:hover{
-    color: rgb(152, 193, 217);
+.delete-button:hover{
+    color: rgb(214, 84, 61);
+}
+
+.complete-button:hover{
+    color: rgb(79, 173, 67);
+}
+
+
+.fa-minus-circle,
+.fa-arrow-circle-right{
+    pointer-events: none;
+}
+
+
+.completed{
+    text-decoration: line-through;
+    opacity: 0.5;
 }
