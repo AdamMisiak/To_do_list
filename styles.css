@@ -1,0 +1,48 @@
+*{
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(152, 193, 217);
+    color: rgb(41, 50, 65);
+    font-family: sans-serif;
+    min-height: 100vh;
+}
+
+header, form{
+    min-height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header{
+    font-size: 1.5rem;
+}
+
+
+form label{
+    padding: 0.5rem;
+    font-size: 2rem;
+}
+
+form button{
+    cursor: pointer;
+    transition: all 0.4s;
+    color: rgb(61, 90, 128);
+}
+
+form button:hover{
+    color: rgb(152, 193, 217);
+}
+
+form input,
+form button {
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    background-color: white;
+}
+
