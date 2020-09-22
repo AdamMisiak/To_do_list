@@ -2,11 +2,13 @@ const input = document.querySelector('.to-do-input');
 const button = document.querySelector('.to-do-button');
 const container = document.querySelector('.to-do-container');
 const list = document.querySelector('.to-do-list');
+const select = document.querySelector('.filter-priority')
 
 
 button.addEventListener('click', addToDoTask);
 list.addEventListener('click', changeToDoTask);
 list.addEventListener('click', changePriority);
+select.addEventListener('click', filterPriority);
 
 
 function addToDoTask(event){
@@ -76,5 +78,50 @@ function changePriority(event){
         clicked_item.parentElement.classList.remove('high');
         clicked_item.parentElement.classList.add('low');
     }
+}
+
+
+function filterPriority(event){
+    const elements_list = list.childNodes;
+
+    elements_list.forEach(function(element){
+
+        if (element.classList)
+            if (element.classList.item(0) == 'to-do-box'){
+                priority = element.classList.item(1)
+                console.log(event.target.value);
+
+                switch(event.target.value){
+
+                    case "all":
+                        element.style.display = 'flex';
+                        break;
+
+                    case "low-priority":
+                        if (priority == 'low'){
+                            element.style.display = 'flex';
+                        } else {
+                            element.style.display = 'none';
+                        }
+                        break;
+
+                    case "medium-priority":
+                        if (priority == 'medium'){
+                            element.style.display = 'flex';
+                        } else {
+                            element.style.display = 'none';
+                        }
+                        break;
+
+                    case "high-priority":
+                        if (priority == 'high'){
+                            element.style.display = 'flex';
+                        } else {
+                            element.style.display = 'none';
+                        }
+                        break;
+                }
+            }
+    });
 }
 
