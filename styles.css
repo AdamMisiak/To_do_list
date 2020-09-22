@@ -117,7 +117,7 @@ header{
     min-width: 31%;
     font-size: 1.4rem;
     color: rgb(117, 117, 117);
-    border-left-color: black;
+    border-left-color:  rgb(117, 117, 117);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;

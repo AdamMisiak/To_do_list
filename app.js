@@ -1,11 +1,16 @@
 const input = document.querySelector('.to-do-input');
+const project_input = document.querySelector('.project-input');
 const button = document.querySelector('.to-do-button');
+const project_button = document.querySelector('.project-button');
 const container = document.querySelector('.to-do-container');
 const list = document.querySelector('.to-do-list');
 const select = document.querySelector('.filter-priority')
 
+var project_dict = {};
+var key = 0;
 
 button.addEventListener('click', addToDoTask);
+project_button.addEventListener('click', addNewProjectToTasks);
 list.addEventListener('click', changeToDoTask);
 list.addEventListener('click', changePriority);
 select.addEventListener('click', filterPriority);
@@ -47,23 +52,49 @@ function addToDoTask(event){
         todoBox.appendChild(todoDelete);
 
         const todoDetails = document.createElement('div');
-        todoDetails.innerHTML = '<p>Details of task:</p>';
+        todoDetails.innerHTML = '<div id="to-do-description" class="to-do-description">Description of task:</div>';
+        todoDetails.innerHTML += '<div id="to-do-project" class="to-do-project">Project: <select id="select-project" class="select-project"></select></div>';
+        // todoDetails.innerHTML += '<select id="select-project" class="select-project"></select>';
+        // todoDetails.innerHTML += '</div>';
+        todoDetails.innerHTML += '<div id="to-do-connection" class="to-do-connection">Connected with:</div>';
         todoDetails.classList.add('to-do-details');
+
         list.appendChild(todoDetails);
 
-    
+        // ADDING NONE PROJECT WHEN CREATING TASK
+        var option = document.createElement("option");
+        var length = document.querySelectorAll(".select-project").length;
+        option.text = 'None';
+        document.querySelectorAll(".select-project")[length-1].appendChild(option);
+
         input.value = '';
     }
 }
 
-// function showTaskDetails(event){
-//     event.preventDefault();
-//     const clicked_item = event.target;
 
-//     if (clicked_item.classList[0] == 'info-button')
+function addNewProjectToTasks(event){
+    event.preventDefault()
+    const tasks = document.querySelectorAll(".select-project");
 
+    if (project_input.value != '')
+    {
+        project_dict[key] = project_input.value;
+        project_input.value = '';
+        key += 1;
+        
+        for (task of tasks){
+            console.log(task);
+        
+            for (const [key, value] of Object.entries(project_dict)) {
+                var option = document.createElement("option");
+                option.text = value;
+                task.appendChild(option);
+            }
+        }
+        project_dict = {};
 
-// }
+    }
+}
 
 
 function changeToDoTask(event){
@@ -88,7 +119,6 @@ function changeToDoTask(event){
         if (details.style.maxHeight){
             details.style.maxHeight = null;
         } else {
-            console.log('test')
             details.style.maxHeight = details.scrollHeight + "px";
         }
     }
