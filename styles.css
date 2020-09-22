@@ -116,6 +116,8 @@ header{
     margin: 0.1rem 0.5rem 0.5rem 0.5rem;
     min-width: 31%;
     font-size: 1.4rem;
+    color: rgb(117, 117, 117);
+    border-left-color: black;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
@@ -183,7 +185,8 @@ header{
 /* ICONS STYLES */
 .fa-minus-circle,
 .fa-check-circle,
-.fa-layer-group{
+.fa-layer-group,
+.fa-info-circle{
     pointer-events: none;
 }
 

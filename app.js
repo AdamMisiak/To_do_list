@@ -51,25 +51,19 @@ function addToDoTask(event){
         todoDetails.classList.add('to-do-details');
         list.appendChild(todoDetails);
 
-
-        var info_button = document.getElementsByClassName("info-button");
-        var i;
-
-        for (i = 0; i < info_button.length; i++) {
-            info_button[i].addEventListener("click", function() {
-
-                var details = this.parentElement.nextElementSibling;
-                if (details.style.maxHeight){
-                    details.style.maxHeight = null;
-                  } else {
-                    details.style.maxHeight = details.scrollHeight + "px";
-                  } 
-            });
-        }
     
         input.value = '';
     }
 }
+
+// function showTaskDetails(event){
+//     event.preventDefault();
+//     const clicked_item = event.target;
+
+//     if (clicked_item.classList[0] == 'info-button')
+
+
+// }
 
 
 function changeToDoTask(event){
@@ -83,11 +77,20 @@ function changeToDoTask(event){
             deleted_item.remove();
         });
     }
-
-    if (clicked_item.classList[0] === 'complete-button'){
+    else if (clicked_item.classList[0] === 'complete-button'){
         const completed_item = clicked_item.parentElement;
         completed_item.nextSibling.classList.toggle('completed')
         completed_item.classList.toggle('completed')  
+    }
+    else if (clicked_item.classList[0] == 'info-button'){
+        var details = event.target.parentElement.nextElementSibling;
+
+        if (details.style.maxHeight){
+            details.style.maxHeight = null;
+        } else {
+            console.log('test')
+            details.style.maxHeight = details.scrollHeight + "px";
+        }
     }
 }
 
