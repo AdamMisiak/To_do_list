@@ -102,10 +102,16 @@ function changeToDoTask(event){
     const clicked_item = event.target;
 
     if (clicked_item.classList[0] === 'delete-button'){
-        const deleted_item = clicked_item.parentElement;
-        deleted_item.classList.toggle('deleted');
-        deleted_item.addEventListener('transitionend', function (){
-            deleted_item.remove();
+        const deleted_task = clicked_item.parentElement;
+        const deleted_description = clicked_item.parentElement.nextSibling;
+        deleted_task.classList.toggle('deleted');
+        deleted_description.classList.toggle('deleted');
+        deleted_description.addEventListener('transitionend', function (){
+            deleted_description.style.maxHeight = null;
+        });
+        deleted_task.addEventListener('transitionend', function (){
+            deleted_task.remove();
+            deleted_description.remove();
         });
     }
     else if (clicked_item.classList[0] === 'complete-button'){
