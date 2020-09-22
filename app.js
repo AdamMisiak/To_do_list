@@ -11,6 +11,7 @@ list.addEventListener('click', changePriority);
 select.addEventListener('click', filterPriority);
 
 
+
 function addToDoTask(event){
     event.preventDefault();
     if (input.value != '')
@@ -25,11 +26,15 @@ function addToDoTask(event){
         todoTask.classList.add('to-do-item');
         todoBox.appendChild(todoTask);
 
+        const todoInfo = document.createElement('button');
+        todoInfo.innerHTML = '<i class="fas fa-info-circle"></i>';
+        todoInfo.classList.add('info-button');
+        todoBox.appendChild(todoInfo);
+
         const todoPriority = document.createElement('button');
         todoPriority.innerHTML = '<i class="fas fa-layer-group"></i>';
         todoPriority.classList.add('priority-button');
         todoBox.appendChild(todoPriority);
-    
 
         const todoDone = document.createElement('button');
         todoDone.innerHTML = '<i class="fas fa-check-circle"></i>';
@@ -40,6 +45,27 @@ function addToDoTask(event){
         todoDelete.innerHTML = '<i class="fas fa-minus-circle"></i>';
         todoDelete.classList.add('delete-button');
         todoBox.appendChild(todoDelete);
+
+        const todoDetails = document.createElement('div');
+        todoDetails.innerHTML = '<p>Details of task:</p>';
+        todoDetails.classList.add('to-do-details');
+        list.appendChild(todoDetails);
+
+
+        var info_button = document.getElementsByClassName("info-button");
+        var i;
+
+        for (i = 0; i < info_button.length; i++) {
+            info_button[i].addEventListener("click", function() {
+
+                var details = this.parentElement.nextElementSibling;
+                if (details.style.maxHeight){
+                    details.style.maxHeight = null;
+                  } else {
+                    details.style.maxHeight = details.scrollHeight + "px";
+                  } 
+            });
+        }
     
         input.value = '';
     }
@@ -60,6 +86,7 @@ function changeToDoTask(event){
 
     if (clicked_item.classList[0] === 'complete-button'){
         const completed_item = clicked_item.parentElement;
+        completed_item.nextSibling.classList.toggle('completed')
         completed_item.classList.toggle('completed')  
     }
 }
@@ -122,4 +149,5 @@ function filterPriority(event){
             }
     });
 }
+
 
