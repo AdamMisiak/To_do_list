@@ -89,8 +89,6 @@ function filterPriority(event){
         if (element.classList)
             if (element.classList.item(0) == 'to-do-box'){
                 priority = element.classList.item(1)
-                console.log(event.target.value);
-
                 switch(event.target.value){
 
                     case "all":
