@@ -49,6 +49,37 @@ form button {
     background-color: white;
 }
 
+/* PRIORITY BUTTONS STYLES */
+.low-button,
+.medium-button,
+.high-button{
+    display: inline-block;
+    padding: 0.5rem;
+    font-size: 1.7rem;
+    border: none;
+    outline:none;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.4s;
+    color: rgb(61, 90, 128);
+}
+
+.low-button:hover{
+    color: rgb(42, 148, 26);
+}
+
+.medium-button:hover{
+    color: rgb(230, 199, 28);
+}
+
+.high-button:hover{
+    color: rgb(197, 43, 22);
+}
+
+.priority-button{
+    text-align: center;
+}
+
 
 /* TO DO CONTAINER/LIST STYLES */
 .to-do-container{
@@ -58,7 +89,7 @@ form button {
 }
 
 .to-do-list{
-    min-width: 35%;
+    min-width: 30%;
     list-style: none;
 }
 
@@ -147,3 +178,5 @@ form button {
     transform: translateX(3rem);
     opacity: 0;
 }
+
+/* FILTERING STYLES */

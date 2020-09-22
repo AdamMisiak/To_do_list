@@ -66,7 +66,6 @@ function changeToDoTask(event){
 function changePriority(event){
     event.preventDefault();
     var clicked_item = event.target;
-    console.log(clicked_item.parentElement.classList[1])
     if (clicked_item.classList[0] === 'priority-button' && clicked_item.parentElement.classList[1] === 'low'){
         clicked_item.parentElement.classList.remove('low');
         clicked_item.parentElement.classList.add('medium');

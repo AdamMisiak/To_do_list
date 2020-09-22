@@ -17,10 +17,17 @@
         <button class="to-do-button" type="submit">
             <i class="fas fa-plus-circle"></i>
         </button>
+        <div class="select">
+            <select name="filter-priority" class="filter-priority">
+                <option value="low-priority">Low</option>
+                <option value="medium-priority">Medium</option>
+                <option value="high-priority">High</option>
+            </select>
+        </div>
     </form>
 
     <div class="to-do-container">
-        <ul class="to-do-list">
+        <ul id="to-do-list" class="to-do-list">
             <!-- ADDING DIVS WITH LI AND BUTTONS HERE -->
         </ul>
     </div>
