@@ -180,3 +180,40 @@ form button {
 }
 
 /* FILTERING STYLES */
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+}
+
+.select{
+    margin: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+select{
+    color: rgb(61, 90, 128);
+    background-color: white;
+    width: 10rem;
+    cursor: pointer;
+    padding: 1rem;
+    font-size: 1.0rem;
+}
+
+.select::after{
+    content: "\25BC";
+    position: absolute;
+    color: rgb(61, 90, 128);
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    pointer-events: none;
+}
+
+.select:hover::after{
+    color: rgb(152, 193, 217);
+    transition: all 0.4s;
+}
