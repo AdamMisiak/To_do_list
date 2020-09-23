@@ -4,12 +4,13 @@ const button = document.querySelector('.to-do-button');
 const project_button = document.querySelector('.project-button');
 const container = document.querySelector('.to-do-container');
 const list = document.querySelector('.to-do-list');
-const select_priority = document.querySelector('.filter-priority')
-const select_project = document.querySelector('.filter-project')
+const select_priority = document.querySelector('.filter-priority');
+const select_project = document.querySelector('.filter-project');
 
 
 var project_dict = {};
 var connection_dict = {};
+var done_connections_dict = {};
 var key = 0;
 var connection_key = 0;
 
@@ -19,7 +20,6 @@ list.addEventListener('click', changeToDoTask);
 list.addEventListener('click', changePriority);
 select_priority.addEventListener('click', filterTasks);
 select_project.addEventListener('click', filterTasks);
-
 
 function addToDoTask(event){
     event.preventDefault();
@@ -102,6 +102,10 @@ function addToDoTask(event){
                 option.text = value;
                 new_connection.appendChild(option);
             }
+
+            for (connection of connections){
+                connection.addEventListener('click', connectTasks);
+            }
         }
 
         // SAVING TASK TO CONNECTION DICT
@@ -171,6 +175,8 @@ function changeToDoTask(event){
         deleted_task.classList.toggle('deleted');
         deleted_description.classList.toggle('deleted');
 
+
+        // WHEN DELETE BUTTON CLICKED DELETING TASK FROM CONNECTION LIST IN OTHER TASKS
         const connections = document.querySelectorAll(".select-connection");
         for (connection of connections){
             for (const [key, option] of Object.entries(connection.options)) {
@@ -178,18 +184,8 @@ function changeToDoTask(event){
                     connection.removeChild(option)
                     console.log(option.value);
                 }
-
             }
-            // console.log(connection.options[1].value)
-
-            
-            // if (task_name != new_connection){
-            //     var option = document.createElement("option");
-            //     option.text = new_connection;
-            //     connection.appendChild(option);  
-            // }
         }
-
 
 
         deleted_description.addEventListener('transitionend', function (){
@@ -277,6 +273,40 @@ function filterTasks(){
                 element.parentElement.parentElement.previousSibling.style.display = 'flex';
             }    
     });
+}
+
+
+function connectTasks(event){
+    event.preventDefault();
+    var clicked_partner = event.target.value;
+    var clicked_task = event.target.parentElement.parentElement.previousSibling.children[0].innerText;
+
+    done_connections_dict[clicked_task] = clicked_partner;
+    console.log(done_connections_dict);
+
+
+    const tasks = document.querySelectorAll(".select-connection");
+    for (task of tasks){
+        checked_task = task.parentElement.parentElement.previousSibling.children[0].innerText;
+
+        console.log(clicked_partner);
+        console.log(clicked_task);
+        for (const [key, option] of Object.entries(task.options)) {
+            console.log(option.value)
+            if (((option.value == clicked_partner && option.value != done_connections_dict[clicked_task]) || 
+                (option.value == clicked_task && checked_task != clicked_partner)) &&
+                clicked_partner != 'none'){
+                task.removeChild(option)
+                console.log('DELETE')
+            }
+            
+        }
+        console.log('BREAK');
+    }
+
+
+
+
 }
 
 
