@@ -60,6 +60,7 @@ function addToDoTask(event){
         // todoDetails.innerHTML += '</div>';
         todoDetails.innerHTML += '<div id="to-do-connection" class="to-do-connection">Connected with:</div>';
         todoDetails.classList.add('to-do-details');
+        todoDetails.classList.add('low');
 
         list.appendChild(todoDetails);
 
@@ -100,11 +101,9 @@ function addNewProjectToTasks(event){
         for (task of tasks){
             var option = document.createElement("option");
             option.text = project_input.value;
-            task.appendChild(option);
-            
+            task.appendChild(option);     
         }
         project_input.value = '';
-
     }
 }
 
@@ -147,15 +146,22 @@ function changeToDoTask(event){
 function changePriority(event){
     event.preventDefault();
     var clicked_item = event.target;
+
     if (clicked_item.classList[0] === 'priority-button' && clicked_item.parentElement.classList[1] === 'low'){
         clicked_item.parentElement.classList.remove('low');
+        clicked_item.parentElement.nextSibling.classList.remove('low');
         clicked_item.parentElement.classList.add('medium');
+        clicked_item.parentElement.nextSibling.classList.add('medium');
     } else if(clicked_item.classList[0] === 'priority-button' && clicked_item.parentElement.classList[1] === 'medium'){
         clicked_item.parentElement.classList.remove('medium');
+        clicked_item.parentElement.nextSibling.classList.remove('medium');
         clicked_item.parentElement.classList.add('high');
+        clicked_item.parentElement.nextSibling.classList.add('high');
     } else if(clicked_item.classList[0] === 'priority-button' && clicked_item.parentElement.classList[1] === 'high'){
         clicked_item.parentElement.classList.remove('high');
+        clicked_item.parentElement.nextSibling.classList.remove('high');
         clicked_item.parentElement.classList.add('low');
+        clicked_item.parentElement.nextSibling.classList.add('low');
     }
 }
 
@@ -166,17 +172,23 @@ function filterPriority(event){
     elements_list.forEach(function(element){
 
         if (element.classList)
-            if (element.classList.item(0) == 'to-do-box'){
+            if (element.classList.item(0) == 'to-do-box' || element.classList.item(0) == 'to-do-details'){
                 priority = element.classList.item(1)
                 switch(event.target.value){
 
                     case "all":
-                        element.style.display = 'flex';
+                        if (element.classList.item(0) == 'to-do-box')
+                            element.style.display = 'flex';
+                        if (element.classList.item(0) == 'to-do-details')
+                            element.style.display = 'block';
                         break;
 
                     case "low-priority":
                         if (priority == 'low'){
-                            element.style.display = 'flex';
+                            if (element.classList.item(0) == 'to-do-box')
+                                element.style.display = 'flex';
+                            if (element.classList.item(0) == 'to-do-details')
+                                element.style.display = 'block';
                         } else {
                             element.style.display = 'none';
                         }
@@ -184,7 +196,10 @@ function filterPriority(event){
 
                     case "medium-priority":
                         if (priority == 'medium'){
-                            element.style.display = 'flex';
+                            if (element.classList.item(0) == 'to-do-box')
+                                element.style.display = 'flex';
+                            if (element.classList.item(0) == 'to-do-details')
+                                element.style.display = 'block';
                         } else {
                             element.style.display = 'none';
                         }
@@ -192,7 +207,10 @@ function filterPriority(event){
 
                     case "high-priority":
                         if (priority == 'high'){
-                            element.style.display = 'flex';
+                            if (element.classList.item(0) == 'to-do-box')
+                                element.style.display = 'flex';
+                            if (element.classList.item(0) == 'to-do-details')
+                                element.style.display = 'block';
                         } else {
                             element.style.display = 'none';
                         }

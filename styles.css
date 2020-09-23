@@ -94,6 +94,7 @@ header{
     background: white;
     border-left: solid;
     border-left-width: 6px;
+    transition: all 0.4s ease;
 }
 
 .to-do-box{
@@ -106,7 +107,6 @@ header{
 
     justify-content: space-between;
     align-items: center;
-    transition: all 0.4s ease;
 }
 
 
@@ -120,12 +120,11 @@ header{
     border-left-color:  rgb(117, 117, 117);
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.2s ease-out;
 }
 
 
 /* PRIORITY LEVELS STYLES */
-.low{
+.to-do-box, .low{
     border-left-color: rgb(42, 148, 26);
 }
 
