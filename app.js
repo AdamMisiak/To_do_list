@@ -4,7 +4,9 @@ const button = document.querySelector('.to-do-button');
 const project_button = document.querySelector('.project-button');
 const container = document.querySelector('.to-do-container');
 const list = document.querySelector('.to-do-list');
-const select = document.querySelector('.filter-priority')
+const select_priority = document.querySelector('.filter-priority')
+const select_project = document.querySelector('.filter-project')
+
 
 var project_dict = {};
 var key = 0;
@@ -13,7 +15,8 @@ button.addEventListener('click', addToDoTask);
 project_button.addEventListener('click', addNewProjectToTasks);
 list.addEventListener('click', changeToDoTask);
 list.addEventListener('click', changePriority);
-select.addEventListener('click', filterPriority);
+select_priority.addEventListener('click', filterTasks);
+select_project.addEventListener('click', filterTasks);
 
 function dictIsEmpty(obj) {
     return Object.keys(obj).length === 0;
@@ -56,8 +59,6 @@ function addToDoTask(event){
         const todoDetails = document.createElement('div');
         todoDetails.innerHTML = '<div id="to-do-description" class="to-do-description">Description of task:</div>';
         todoDetails.innerHTML += '<div id="to-do-project" class="to-do-project">Project: <select id="select-project" class="select-project"></select></div>';
-        // todoDetails.innerHTML += '<select id="select-project" class="select-project"></select>';
-        // todoDetails.innerHTML += '</div>';
         todoDetails.innerHTML += '<div id="to-do-connection" class="to-do-connection">Connected with:</div>';
         todoDetails.classList.add('to-do-details');
         todoDetails.classList.add('low');
@@ -68,6 +69,7 @@ function addToDoTask(event){
         var option = document.createElement("option");
         var length = document.querySelectorAll(".select-project").length;
         option.text = 'None';
+        option.value = 'none';
         document.querySelectorAll(".select-project")[length-1].appendChild(option);
 
 
@@ -92,6 +94,7 @@ function addToDoTask(event){
 function addNewProjectToTasks(event){
     event.preventDefault()
     const tasks = document.querySelectorAll(".select-project");
+    const projects_menu = document.querySelector('.filter-project')
 
     if (project_input.value != '')
     {
@@ -103,6 +106,11 @@ function addNewProjectToTasks(event){
             option.text = project_input.value;
             task.appendChild(option);     
         }
+
+        var option = document.createElement("option");
+        option.text = project_input.value;
+        projects_menu.appendChild(option);     
+
         project_input.value = '';
     }
 }
@@ -165,58 +173,43 @@ function changePriority(event){
     }
 }
 
-
-function filterPriority(event){
-    const elements_list = list.childNodes;
-
-    elements_list.forEach(function(element){
-
+function filterTasks(){
+    var tasks = document.querySelectorAll('.select-project');
+    
+    tasks.forEach(function(element){
         if (element.classList)
-            if (element.classList.item(0) == 'to-do-box' || element.classList.item(0) == 'to-do-details'){
-                priority = element.classList.item(1)
-                switch(event.target.value){
+            var chosen_project = select_project.options[select_project.selectedIndex];
+            var chosen_priority = select_priority.options[select_priority.selectedIndex];
+            var task_project = element.options[element.selectedIndex];
+            var task_priority = element.parentElement.parentElement.classList.item(1);
 
-                    case "all":
-                        if (element.classList.item(0) == 'to-do-box')
-                            element.style.display = 'flex';
-                        if (element.classList.item(0) == 'to-do-details')
-                            element.style.display = 'block';
-                        break;
+            // CHECKING PROJECTS
+            if (chosen_project.value == task_project.value){
+                element.parentElement.parentElement.style.display = 'block';
+                element.parentElement.parentElement.previousSibling.style.display = 'flex';
 
-                    case "low-priority":
-                        if (priority == 'low'){
-                            if (element.classList.item(0) == 'to-do-box')
-                                element.style.display = 'flex';
-                            if (element.classList.item(0) == 'to-do-details')
-                                element.style.display = 'block';
-                        } else {
-                            element.style.display = 'none';
-                        }
-                        break;
+                // CHECKING PRIORITIES
+                if (chosen_priority.value == task_priority){
+                    element.parentElement.parentElement.style.display = 'block';
+                    element.parentElement.parentElement.previousSibling.style.display = 'flex';
+                } else {
+                    element.parentElement.parentElement.style.display = 'none';
+                    element.parentElement.parentElement.previousSibling.style.display = 'none';
+                } 
 
-                    case "medium-priority":
-                        if (priority == 'medium'){
-                            if (element.classList.item(0) == 'to-do-box')
-                                element.style.display = 'flex';
-                            if (element.classList.item(0) == 'to-do-details')
-                                element.style.display = 'block';
-                        } else {
-                            element.style.display = 'none';
-                        }
-                        break;
+            // HIDDING ELEMENT FILTRY NA DOL!!!!!!!!!!!!!!!!
+            } else {
+                element.parentElement.parentElement.style.display = 'none';
+                element.parentElement.parentElement.previousSibling.style.display = 'none';
+            } 
 
-                    case "high-priority":
-                        if (priority == 'high'){
-                            if (element.classList.item(0) == 'to-do-box')
-                                element.style.display = 'flex';
-                            if (element.classList.item(0) == 'to-do-details')
-                                element.style.display = 'block';
-                        } else {
-                            element.style.display = 'none';
-                        }
-                        break;
-                }
-            }
+            // CHECKING WHEN ONE OR TWO FILTERS ARE 'ALL'
+            if ((chosen_project.value == 'all' && chosen_priority.value == task_priority) ||
+                (chosen_priority.value == 'all' && chosen_project.value == task_project.value) ||
+                (chosen_priority.value == 'all' && chosen_project.value == 'all')) {
+                element.parentElement.parentElement.style.display = 'block';
+                element.parentElement.parentElement.previousSibling.style.display = 'flex';
+            }    
     });
 }
 

@@ -83,7 +83,7 @@ header{
 
 .to-do-list{
     min-width: 31%;
-    max-width: 35%;
+    max-width: 40%;
     list-style: none;
 }
 
@@ -124,7 +124,7 @@ header{
 
 
 /* PRIORITY LEVELS STYLES */
-.to-do-box, .low{
+.low{
     border-left-color: rgb(42, 148, 26);
 }
 
@@ -140,6 +140,8 @@ header{
 /* TO DO TEXT/ITEM STYLES */
 .to-do-item{
     padding: 0.5rem;
+    max-width: 80%;
+    overflow: hidden;
     background: white;
     display: flex;
     justify-content: space-between;
