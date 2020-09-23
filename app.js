@@ -1,38 +1,38 @@
-const input = document.querySelector('.to-do-input');
+const task_input = document.querySelector('.task-input');
 const project_input = document.querySelector('.project-input');
-const button = document.querySelector('.to-do-button');
+const task_button = document.querySelector('.task-button');
 const project_button = document.querySelector('.project-button');
-const container = document.querySelector('.to-do-container');
-const list = document.querySelector('.to-do-list');
-const select_priority = document.querySelector('.filter-priority');
-const select_project = document.querySelector('.filter-project');
+const tasks_container = document.querySelector('.task-container');
+const tasks_list = document.querySelector('.task-list');
+const filter_priority = document.querySelector('.filter-priority');
+const filter_project = document.querySelector('.filter-project');
+
+let projects_list = [];
+let available_connections_dict = {};
+let connection_key = 0;
+let done_connections_dict = {};
 
 
-var project_dict = {};
-var connection_dict = {};
-var done_connections_dict = {};
-var key = 0;
-var connection_key = 0;
+task_button.addEventListener('click', addNewTask);
+project_button.addEventListener('click', addNewProjectToExistingTasks);
+tasks_list.addEventListener('click', changeToDoTask);
+tasks_list.addEventListener('click', changePriority);
+filter_priority.addEventListener('click', filterTasks);
+filter_project.addEventListener('click', filterTasks);
 
-button.addEventListener('click', addToDoTask);
-project_button.addEventListener('click', addNewProjectToTasks);
-list.addEventListener('click', changeToDoTask);
-list.addEventListener('click', changePriority);
-select_priority.addEventListener('click', filterTasks);
-select_project.addEventListener('click', filterTasks);
-
-function addToDoTask(event){
+function addNewTask(event){
     event.preventDefault();
-    if (input.value != '')
+    if (task_input.value != '')
     {
+        saveLocalTasksToStorage(task_input.value);
         const todoBox = document.createElement('div');
-        todoBox.classList.add('to-do-box');
+        todoBox.classList.add('task-box');
         todoBox.classList.add('low');
-        list.appendChild(todoBox);
+        tasks_list.appendChild(todoBox);
     
         const todoTask = document.createElement('li');
-        todoTask.innerText = input.value;
-        todoTask.classList.add('to-do-item');
+        todoTask.innerText = task_input.value;
+        todoTask.classList.add('task-item');
         todoBox.appendChild(todoTask);
 
         const todoInfo = document.createElement('button');
@@ -58,47 +58,46 @@ function addToDoTask(event){
         const todoDetails = document.createElement('div');
         todoDetails.innerHTML += '<div id="to-do-project" class="to-do-project">Project: <select id="select-project" class="select-project"></select></div>';
         todoDetails.innerHTML += '<div id="to-do-connection" class="to-do-connection">Connected with: <select id="select-connection" class="select-connection"></select></div>';
-        todoDetails.classList.add('to-do-details');
+        todoDetails.classList.add('task-details');
         todoDetails.classList.add('low');
-
-        list.appendChild(todoDetails);
+        tasks_list.appendChild(todoDetails);
 
         // ADDING NONE PROJECT WHEN CREATING TASK
-        var option = document.createElement("option");
-        var length = document.querySelectorAll(".select-project").length;
+        option = document.createElement("option");
+        length = document.querySelectorAll(".select-project").length;
         option.text = 'None';
         option.value = 'none';
         document.querySelectorAll(".select-project")[length-1].appendChild(option);
 
         // ADDING NONE CONNECTION WHEN CREATING TASK
-        var option = document.createElement("option");
-        var length = document.querySelectorAll(".select-connection").length;
+        option = document.createElement("option");
+        length = document.querySelectorAll(".select-connection").length;
         option.text = 'None';
         option.value = 'none';
         document.querySelectorAll(".select-connection")[length-1].appendChild(option);
 
 
         // ADDING CURRENT PROJECTS TO NEW ADDED TASK
-        if(project_dict[0] != undefined){
-            const tasks = document.querySelectorAll(".select-project");
-            var counter = document.querySelectorAll(".select-project").length;
+        if(projects_list[0] != undefined){
+            let tasks = document.querySelectorAll(".select-project");
+            let counter = document.querySelectorAll(".select-project").length;
             new_task = tasks[counter-1];
 
-            for (const [key, value] of Object.entries(project_dict)) {
-                var option = document.createElement("option");
-                option.text = value;
+            for (const project of projects_list){
+                option = document.createElement("option");
+                option.text = project;
                 new_task.appendChild(option);
             }
         }
-
-        // ADDING CURRENT CONNECTIONS TO NEW ADDED TASK
-        if(connection_dict[0] != undefined){
+        
+        // ADDING AVAILABLE CURRENT CONNECTIONS TO NEW ADDED TASK
+        if(available_connections_dict[0] != undefined){
             const connections = document.querySelectorAll(".select-connection");
-            var counter = document.querySelectorAll(".select-connection").length;
+            counter = document.querySelectorAll(".select-connection").length;
             new_connection = connections[counter-1];
 
-            for (const [key, value] of Object.entries(connection_dict)) {
-                var option = document.createElement("option");
+            for (const [key, value] of Object.entries(available_connections_dict)) {
+                option = document.createElement("option");
                 option.text = value;
                 option.value = value;
                 new_connection.appendChild(option);
@@ -109,35 +108,34 @@ function addToDoTask(event){
             }
         }
 
-        // SAVING TASK TO CONNECTION DICT
-        connection_dict[connection_key] = input.value;
+        // SAVING TASK TO AVAILABLE CONNECTION DICT
+        available_connections_dict[connection_key] = task_input.value;
         connection_key += 1;
 
-        // ADDING NEW TASK TO CONNECTIONS
+        // ADDING NEW TASK TO AVAILABLE CONNECTIONS
         addConnectionsToList(event);
 
-        input.value = '';
+        task_input.value = '';
     }
 }
 
 
-function addNewProjectToTasks(event){
+function addNewProjectToExistingTasks(event){
     event.preventDefault()
     const tasks = document.querySelectorAll(".select-project");
     const projects_menu = document.querySelector('.filter-project')
 
     if (project_input.value != '')
     {
-        project_dict[key] = project_input.value;
-        key += 1;
+        projects_list.push(project_input.value);
 
         for (task of tasks){
-            var option = document.createElement("option");
+            option = document.createElement("option");
             option.text = project_input.value;
             task.appendChild(option);     
         }
 
-        var option = document.createElement("option");
+        option = document.createElement("option");
         option.text = project_input.value;
         projects_menu.appendChild(option);     
 
@@ -145,18 +143,19 @@ function addNewProjectToTasks(event){
     }
 }
 
+// ADDING NEW TASK TO AVAILABLE CONNECTIONS
 function addConnectionsToList(event){
     event.preventDefault()
 
     const connections = document.querySelectorAll(".select-connection");
-    var keys = Object.keys(connection_dict);
+    var keys = Object.keys(available_connections_dict);
     var last = keys[keys.length-1];
-    new_connection = connection_dict[last];
+    new_connection = available_connections_dict[last];
 
     for (connection of connections){
         var task_name = connection.parentElement.parentElement.previousElementSibling.childNodes[0].innerText;
         if (task_name != new_connection){
-            var option = document.createElement("option");
+            option = document.createElement("option");
             option.text = new_connection;
             option.value = new_connection;
             connection.appendChild(option);  
@@ -176,6 +175,7 @@ function changeToDoTask(event){
 
         deleted_task.classList.toggle('deleted');
         deleted_description.classList.toggle('deleted');
+        removeLocalTasksFromStorage(deleted_task);
 
 
         // WHEN DELETE BUTTON CLICKED DELETING TASK FROM CONNECTION LIST IN OTHER TASKS
@@ -184,7 +184,6 @@ function changeToDoTask(event){
             for (const [key, option] of Object.entries(connection.options)) {
                 if (option.value == deleted_name){
                     connection.removeChild(option)
-                    console.log(option.value);
                 }
             }
         }
@@ -242,8 +241,8 @@ function filterTasks(){
     
     tasks.forEach(function(element){
         if (element.classList)
-            var chosen_project = select_project.options[select_project.selectedIndex];
-            var chosen_priority = select_priority.options[select_priority.selectedIndex];
+            var chosen_project = filter_project.options[filter_project.selectedIndex];
+            var chosen_priority = filter_priority.options[filter_priority.selectedIndex];
             var task_project = element.options[element.selectedIndex];
             var task_priority = element.parentElement.parentElement.classList.item(1);
 
@@ -303,10 +302,7 @@ function connectTasks(event){
             }
         }
     }
-
-
-
-
 }
+
 
 

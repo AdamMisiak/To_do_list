@@ -12,19 +12,6 @@ body{
     min-height: 100vh;
 }
 
-.task-form{
-    min-height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.project-form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 header{
     min-height: 20vh;
     display: flex;
@@ -38,6 +25,17 @@ header{
 .task-form{
     padding: 0.5rem;
     font-size: 2rem;
+    min-height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-form{
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .task-form, button{
@@ -51,8 +49,12 @@ header{
     color: rgb(152, 193, 217);
 }
 
-.to-do-input,
-.to-do-button {
+
+/* INPUTS AND BUTTONS STYLES */
+.task-input,
+.task-button,
+.project-input,
+.project-button {
     padding: 0.5rem;
     font-size: 2rem;
     border: none;
@@ -62,42 +64,33 @@ header{
 
 .project-input,
 .project-button {
-    padding: 0.5rem;
     font-size: 1.2rem;
-    border: none;
-    outline: none;
-    background-color: white;
 }
 
-.project-form{
-    margin-bottom: 3rem;
-}
-
-
-/* TO DO CONTAINER/LIST STYLES */
-.to-do-container{
+/* TASKS CONTAINER/LIST STYLES */
+.task-container{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.to-do-list{
+.task-list{
     min-width: 31%;
     max-width: 40%;
     list-style: none;
 }
 
 
-/* TO DO ELEMENTS STYLES */
-.to-do-box,
-.to-do-details{
+/* TASK ELEMENTS STYLES */
+.task-box,
+.task-details{
     background: white;
     border-left: solid;
     border-left-width: 6px;
     transition: all 0.4s ease;
 }
 
-.to-do-box{
+.task-box{
     margin: 0.5rem;
     margin-bottom: 0.1rem;
     padding-bottom: 0rem;
@@ -109,9 +102,21 @@ header{
     align-items: center;
 }
 
+/* TASK TEXT/ITEM STYLES */
+.task-item{
+    padding: 0.5rem;
+    max-width: 80%;
+    overflow: hidden;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
 
-/* TO DO DETAILS STYLES */
-.to-do-details{
+
+/* TASK DETAILS STYLES */
+.task-details{
     padding: 0 0.5rem;
     margin: 0.1rem 0.5rem 0.5rem 0.5rem;
     min-width: 31%;
@@ -134,19 +139,6 @@ header{
 
 .high{
     border-left-color: rgb(197, 43, 22);
-}
-
-
-/* TO DO TEXT/ITEM STYLES */
-.to-do-item{
-    padding: 0.5rem;
-    max-width: 80%;
-    overflow: hidden;
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
 }
 
 
@@ -220,6 +212,21 @@ select{
     overflow: hidden;
 }
 
+.select::after{
+    content: "\25BC";
+    position: absolute;
+    color: rgb(61, 90, 128);
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    pointer-events: none;
+}
+
+.select:hover::after{
+    color: rgb(152, 193, 217);
+    transition: all 0.4s;
+}
+
 .filter-priority{
     appearance: none;
     color: rgb(61, 90, 128);
@@ -240,8 +247,7 @@ select{
     font-size: 1rem;
 }
 
-
-/* SELECTING PROJECT TO TASK */
+/* SELECTING PROJECT OR TASK-PARTNER TO TASK */
 .select-project,
 .select-connection{
     color: rgb(61, 90, 128);
@@ -251,21 +257,6 @@ select{
     font-size: 1.2rem;
     position: relative;
     overflow: hidden;
-}
-
-.select::after{
-    content: "\25BC";
-    position: absolute;
-    color: rgb(61, 90, 128);
-    top: 0;
-    right: 0;
-    padding: 0.5rem;
-    pointer-events: none;
-}
-
-.select:hover::after{
-    color: rgb(152, 193, 217);
-    transition: all 0.4s;
 }
 
 
