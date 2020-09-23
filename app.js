@@ -15,7 +15,9 @@ list.addEventListener('click', changeToDoTask);
 list.addEventListener('click', changePriority);
 select.addEventListener('click', filterPriority);
 
-
+function dictIsEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
 
 function addToDoTask(event){
     event.preventDefault();
@@ -66,6 +68,20 @@ function addToDoTask(event){
         var length = document.querySelectorAll(".select-project").length;
         option.text = 'None';
         document.querySelectorAll(".select-project")[length-1].appendChild(option);
+
+
+        // ADDING CURRENT PROJECTS TO NEW ADDED TASK
+        if(project_dict[0] != undefined){
+            const tasks = document.querySelectorAll(".select-project");
+            var counter = document.querySelectorAll(".select-project").length;
+            new_task = tasks[counter-1];
+
+            for (const [key, value] of Object.entries(project_dict)) {
+                var option = document.createElement("option");
+                option.text = value;
+                new_task.appendChild(option);
+            }
+        }
 
         input.value = '';
     }
