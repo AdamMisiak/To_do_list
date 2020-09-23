@@ -56,7 +56,6 @@ function addToDoTask(event){
         todoBox.appendChild(todoDelete);
 
         const todoDetails = document.createElement('div');
-        todoDetails.innerHTML = '<div id="to-do-description" class="to-do-description">Description of task:</div>';
         todoDetails.innerHTML += '<div id="to-do-project" class="to-do-project">Project: <select id="select-project" class="select-project"></select></div>';
         todoDetails.innerHTML += '<div id="to-do-connection" class="to-do-connection">Connected with: <select id="select-connection" class="select-connection"></select></div>';
         todoDetails.classList.add('to-do-details');
@@ -167,8 +166,31 @@ function changeToDoTask(event){
     if (clicked_item.classList[0] === 'delete-button'){
         const deleted_task = clicked_item.parentElement;
         const deleted_description = clicked_item.parentElement.nextSibling;
+        const deleted_name = deleted_task.childNodes[0].innerText;
+
         deleted_task.classList.toggle('deleted');
         deleted_description.classList.toggle('deleted');
+
+        const connections = document.querySelectorAll(".select-connection");
+        for (connection of connections){
+            for (const [key, option] of Object.entries(connection.options)) {
+                if (option.value == deleted_name){
+                    connection.removeChild(option)
+                    console.log(option.value);
+                }
+
+            }
+            // console.log(connection.options[1].value)
+
+            
+            // if (task_name != new_connection){
+            //     var option = document.createElement("option");
+            //     option.text = new_connection;
+            //     connection.appendChild(option);  
+            // }
+        }
+
+
 
         deleted_description.addEventListener('transitionend', function (){
             deleted_description.style.maxHeight = null;
