@@ -100,6 +100,7 @@ function addToDoTask(event){
             for (const [key, value] of Object.entries(connection_dict)) {
                 var option = document.createElement("option");
                 option.text = value;
+                option.value = value;
                 new_connection.appendChild(option);
             }
 
@@ -157,6 +158,7 @@ function addConnectionsToList(event){
         if (task_name != new_connection){
             var option = document.createElement("option");
             option.text = new_connection;
+            option.value = new_connection;
             connection.appendChild(option);  
         }
     }
@@ -278,30 +280,28 @@ function filterTasks(){
 
 function connectTasks(event){
     event.preventDefault();
+
     var clicked_partner = event.target.value;
     var clicked_task = event.target.parentElement.parentElement.previousSibling.children[0].innerText;
 
     done_connections_dict[clicked_task] = clicked_partner;
-    console.log(done_connections_dict);
-
 
     const tasks = document.querySelectorAll(".select-connection");
     for (task of tasks){
-        checked_task = task.parentElement.parentElement.previousSibling.children[0].innerText;
+        task_name = task.parentElement.parentElement.previousSibling.children[0].innerText;
 
-        console.log(clicked_partner);
-        console.log(clicked_task);
-        for (const [key, option] of Object.entries(task.options)) {
-            console.log(option.value)
-            if (((option.value == clicked_partner && option.value != done_connections_dict[clicked_task]) || 
-                (option.value == clicked_task && checked_task != clicked_partner)) &&
-                clicked_partner != 'none'){
-                task.removeChild(option)
-                console.log('DELETE')
+        for (const [key, option] of Object.entries(task.options)){
+
+            if (task_name == clicked_partner && task.options.selectedIndex == 0){  
+                task.options.selectedIndex = key;
             }
             
+            if (option.value == clicked_task && task_name != clicked_partner){
+                task.removeChild(option);
+            } else if (option.value == clicked_partner && task_name != clicked_task) {
+                task.removeChild(option);
+            }
         }
-        console.log('BREAK');
     }
 
 

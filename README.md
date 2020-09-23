@@ -1,6 +1,6 @@
 # To Do List
 
-Live version: 
+Live version: https://list-to-do-application.herokuapp.com/
 
 Application created to manage tasks. Tasks and projects/groups can be added by user. Priority can be set to every task (low/medium/high). Task can be assigned to project/group. Each task can be connected to the partner.  Created using Vanilla JavaScript.
 
