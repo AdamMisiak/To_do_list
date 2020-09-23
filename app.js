@@ -9,7 +9,9 @@ const select_project = document.querySelector('.filter-project')
 
 
 var project_dict = {};
+var connection_dict = {};
 var key = 0;
+var connection_key = 0;
 
 button.addEventListener('click', addToDoTask);
 project_button.addEventListener('click', addNewProjectToTasks);
@@ -18,9 +20,6 @@ list.addEventListener('click', changePriority);
 select_priority.addEventListener('click', filterTasks);
 select_project.addEventListener('click', filterTasks);
 
-function dictIsEmpty(obj) {
-    return Object.keys(obj).length === 0;
-  }
 
 function addToDoTask(event){
     event.preventDefault();
@@ -59,7 +58,7 @@ function addToDoTask(event){
         const todoDetails = document.createElement('div');
         todoDetails.innerHTML = '<div id="to-do-description" class="to-do-description">Description of task:</div>';
         todoDetails.innerHTML += '<div id="to-do-project" class="to-do-project">Project: <select id="select-project" class="select-project"></select></div>';
-        todoDetails.innerHTML += '<div id="to-do-connection" class="to-do-connection">Connected with:</div>';
+        todoDetails.innerHTML += '<div id="to-do-connection" class="to-do-connection">Connected with: <select id="select-connection" class="select-connection"></select></div>';
         todoDetails.classList.add('to-do-details');
         todoDetails.classList.add('low');
 
@@ -71,6 +70,13 @@ function addToDoTask(event){
         option.text = 'None';
         option.value = 'none';
         document.querySelectorAll(".select-project")[length-1].appendChild(option);
+
+        // ADDING NONE CONNECTION WHEN CREATING TASK
+        var option = document.createElement("option");
+        var length = document.querySelectorAll(".select-connection").length;
+        option.text = 'None';
+        option.value = 'none';
+        document.querySelectorAll(".select-connection")[length-1].appendChild(option);
 
 
         // ADDING CURRENT PROJECTS TO NEW ADDED TASK
@@ -85,6 +91,26 @@ function addToDoTask(event){
                 new_task.appendChild(option);
             }
         }
+
+        // ADDING CURRENT CONNECTIONS TO NEW ADDED TASK
+        if(connection_dict[0] != undefined){
+            const connections = document.querySelectorAll(".select-connection");
+            var counter = document.querySelectorAll(".select-connection").length;
+            new_connection = connections[counter-1];
+
+            for (const [key, value] of Object.entries(connection_dict)) {
+                var option = document.createElement("option");
+                option.text = value;
+                new_connection.appendChild(option);
+            }
+        }
+
+        // SAVING TASK TO CONNECTION DICT
+        connection_dict[connection_key] = input.value;
+        connection_key += 1;
+
+        // ADDING NEW TASK TO CONNECTIONS
+        addConnectionsToList(event);
 
         input.value = '';
     }
@@ -112,6 +138,24 @@ function addNewProjectToTasks(event){
         projects_menu.appendChild(option);     
 
         project_input.value = '';
+    }
+}
+
+function addConnectionsToList(event){
+    event.preventDefault()
+
+    const connections = document.querySelectorAll(".select-connection");
+    var keys = Object.keys(connection_dict);
+    var last = keys[keys.length-1];
+    new_connection = connection_dict[last];
+
+    for (connection of connections){
+        var task_name = connection.parentElement.parentElement.previousElementSibling.childNodes[0].innerText;
+        if (task_name != new_connection){
+            var option = document.createElement("option");
+            option.text = new_connection;
+            connection.appendChild(option);  
+        }
     }
 }
 

@@ -242,7 +242,8 @@ select{
 
 
 /* SELECTING PROJECT TO TASK */
-.select-project{
+.select-project,
+.select-connection{
     color: rgb(61, 90, 128);
     background-color: rgb(255, 255, 255);
     width: 6rem;
