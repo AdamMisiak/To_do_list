@@ -79,19 +79,15 @@ function addNewProjectToTasks(event){
     if (project_input.value != '')
     {
         project_dict[key] = project_input.value;
-        project_input.value = '';
         key += 1;
-        
+
         for (task of tasks){
-            console.log(task);
-        
-            for (const [key, value] of Object.entries(project_dict)) {
-                var option = document.createElement("option");
-                option.text = value;
-                task.appendChild(option);
-            }
+            var option = document.createElement("option");
+            option.text = project_input.value;
+            task.appendChild(option);
+            
         }
-        project_dict = {};
+        project_input.value = '';
 
     }
 }
@@ -106,6 +102,7 @@ function changeToDoTask(event){
         const deleted_description = clicked_item.parentElement.nextSibling;
         deleted_task.classList.toggle('deleted');
         deleted_description.classList.toggle('deleted');
+
         deleted_description.addEventListener('transitionend', function (){
             deleted_description.style.maxHeight = null;
         });
