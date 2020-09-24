@@ -1,3 +1,6 @@
+import { tasksList, projectsList, availableConnectionsDict, taskInput } from './app.js';
+
+    var connectionKey;
 
 document.addEventListener("DOMContentLoaded", getTasksFromLocalStorage);
 
@@ -40,7 +43,7 @@ function getTasksFromLocalStorage(event) {
         const taskBox = document.createElement('div');
         taskBox.classList.add('task-box');
         taskBox.classList.add('low');
-        tasks_list.appendChild(taskBox);
+        tasksList.appendChild(taskBox);
     
         const taskItem = document.createElement('li');
         taskItem.innerText = task;
@@ -69,28 +72,19 @@ function getTasksFromLocalStorage(event) {
 
         const taskDetails = document.createElement('div');
         taskDetails.innerHTML += '<div id="task-project" class="task-project">Project: <select id="select-project" class="select-project"></select></div>';
-        taskDetails.innerHTML += '<div id="task-connection" class="task-connection">Connected with: <select id="select-connection" class="select-connection"></select></div>';
         taskDetails.classList.add('task-details');
         taskDetails.classList.add('low');
-        tasks_list.appendChild(taskDetails);
+        tasksList.appendChild(taskDetails);
 
         // ADDING NONE PROJECT WHEN CREATING TASK
-        option = document.createElement("option");
-        length = document.querySelectorAll(".select-project").length;
+        let option = document.createElement("option");
+        let length = document.querySelectorAll(".select-project").length;
         option.text = 'None';
         option.value = 'none';
         document.querySelectorAll(".select-project")[length-1].appendChild(option);
 
-        // ADDING NONE CONNECTION WHEN CREATING TASK
-        option = document.createElement("option");
-        length = document.querySelectorAll(".select-connection").length;
-        option.text = 'None';
-        option.value = 'none';
-        document.querySelectorAll(".select-connection")[length-1].appendChild(option);
-
-
         // ADDING CURRENT PROJECTS TO NEW ADDED TASK
-        if(projects_list[0] != undefined){
+        if(projectsList[0] != undefined){
             let project_selectors = document.querySelectorAll(".select-project");
             let counter = document.querySelectorAll(".select-project").length;
             last_selector = project_selectors[counter-1];
@@ -101,44 +95,8 @@ function getTasksFromLocalStorage(event) {
                 last_selector.appendChild(option);
             }
         }
-        
-        // ADDING AVAILABLE CURRENT CONNECTIONS TO NEW ADDED TASK
-        if(available_connections_dict[0] != undefined){
-            const connection_selectors = document.querySelectorAll(".select-connection");
-            counter = document.querySelectorAll(".select-connection").length;
-            last_selector = connection_selectors[counter-1];
 
-            for (const [key, value] of Object.entries(available_connections_dict)) {
-                option = document.createElement("option");
-                option.text = value;
-                option.value = value;
-                last_selector.appendChild(option);
-            }
-        }
-
-        // SAVING TASK TO AVAILABLE CONNECTION DICT
-        available_connections_dict[connection_key] = task_input.value;
-        connection_key += 1;
-
-        // ADDING NEW TASK TO EXISTING AVAILABLE CONNECTIONS
-        const connection_selectors = document.querySelectorAll(".select-connection");
-        var available_connections_keys = Object.keys(available_connections_dict);
-        var last_key = available_connections_keys[available_connections_keys.length-1];
-        last_connection = available_connections_dict[last_key];
-    
-        for (selector of connection_selectors){
-            let task_name = selector.parentElement.parentElement.previousElementSibling.childNodes[0].innerText;
-            
-            // ADDING CONNECT TASKS POSIBILITY - EVENT LISTENER 
-            selector.addEventListener('click', connectTasks);
-
-            if (task_name != last_connection){
-                option = document.createElement("option");
-                option.text = last_connection;
-                option.value = last_connection;
-                selector.appendChild(option);  
-            }
-        }
     });
   }
 
+  export {removeLocalTasksFromStorage, saveLocalTasksToStorage};
