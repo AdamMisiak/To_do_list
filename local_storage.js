@@ -1,8 +1,18 @@
-import { tasksList, projectsList, availableConnectionsDict, taskInput } from './app.js';
+import { tasksList, projectsList } from './app.js';
 
-    var connectionKey;
 
 document.addEventListener("DOMContentLoaded", getTasksFromLocalStorage);
+
+function addNewElementToTask(elementType, addedClasses, appendedTo, addedHTML){
+    const createdElement = document.createElement(elementType);
+    addedHTML = addedHTML || '';
+    for (const addedClass of addedClasses){
+        createdElement.classList.add(addedClass);
+    }
+    createdElement.innerHTML = addedHTML;
+    appendedTo.appendChild(createdElement);
+    return createdElement;
+}
 
 
 function saveLocalTasksToStorage(task) {
@@ -40,41 +50,14 @@ function getTasksFromLocalStorage(event) {
     }
     tasks.forEach(function(task) {
 
-        const taskBox = document.createElement('div');
-        taskBox.classList.add('task-box');
-        taskBox.classList.add('low');
-        tasksList.appendChild(taskBox);
-    
-        const taskItem = document.createElement('li');
-        taskItem.innerText = task;
-        taskItem.classList.add('task-item');
-        taskBox.appendChild(taskItem);
-
-        const taskInfo = document.createElement('button');
-        taskInfo.innerHTML = '<i class="fas fa-info-circle"></i>';
-        taskInfo.classList.add('info-button');
-        taskBox.appendChild(taskInfo);
-
-        const taskPriority = document.createElement('button');
-        taskPriority.innerHTML = '<i class="fas fa-layer-group"></i>';
-        taskPriority.classList.add('priority-button');
-        taskBox.appendChild(taskPriority);
-
-        const taskDone = document.createElement('button');
-        taskDone.innerHTML = '<i class="fas fa-check-circle"></i>';
-        taskDone.classList.add('complete-button');
-        taskBox.appendChild(taskDone);
-    
-        const taskDelete = document.createElement('button');
-        taskDelete.innerHTML = '<i class="fas fa-minus-circle"></i>';
-        taskDelete.classList.add('delete-button');
-        taskBox.appendChild(taskDelete);
-
-        const taskDetails = document.createElement('div');
-        taskDetails.innerHTML += '<div id="task-project" class="task-project">Project: <select id="select-project" class="select-project"></select></div>';
-        taskDetails.classList.add('task-details');
-        taskDetails.classList.add('low');
-        tasksList.appendChild(taskDetails);
+        // ADDING ELEMENTS TO NEW TASK
+        const taskBox = addNewElementToTask('div', ['task-box', 'low'], tasksList);
+        const taskItem = addNewElementToTask('li', ['task-item'], taskBox, task);
+        const taskInfo = addNewElementToTask('button', ['info-button'], taskBox, '<i class="fas fa-info-circle"></i>');
+        const taskPriority = addNewElementToTask('button', ['priority-button'], taskBox, '<i class="fas fa-layer-group"></i>');
+        const taskDone = addNewElementToTask('button', ['complete-button'], taskBox, '<i class="fas fa-check-circle"></i>');
+        const taskDelete = addNewElementToTask('button', ['delete-button'], taskBox, '<i class="fas fa-minus-circle"></i>');
+        const taskDetails = addNewElementToTask('div', ['task-details', 'low'], tasksList, '<div id="task-project" class="task-project">Project: <select id="select-project" class="select-project"></select></div>');
 
         // ADDING NONE PROJECT WHEN CREATING TASK
         let option = document.createElement("option");
@@ -99,4 +82,4 @@ function getTasksFromLocalStorage(event) {
     });
   }
 
-  export {removeLocalTasksFromStorage, saveLocalTasksToStorage};
+  export {removeLocalTasksFromStorage, saveLocalTasksToStorage, addNewElementToTask};
