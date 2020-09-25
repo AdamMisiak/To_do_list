@@ -102,7 +102,6 @@ header{
     font-size: 1.8rem;
     overflow: hidden;
     display: flex;
-
     justify-content: space-between;
     align-items: center;
 }
@@ -259,12 +258,23 @@ select{
 
 
 /* MOBILE STYLES */
-
-
 @media only screen and (max-width:1024px){
     header{
         min-height: 12vh;
         font-size: 1.3rem;
+    }
+
+    .task-input,
+    .task-button,
+    .project-input,
+    .project-button {
+        padding: 0.3rem;
+        font-size: 1.5rem;
+    }
+
+    .project-input,
+    .project-button {
+        font-size: 1.0rem;
     }
     
     .task-form{
@@ -274,49 +284,141 @@ select{
         margin-bottom: 0.3rem;
     }
 
+    .task-box,
+    .task-details{
+        border-left-width: 4px;
+    }
 
+    .task-box{
+        margin: 0.3rem;
+        margin-bottom: 0.1rem;
+        padding-bottom: 0rem;
+        font-size: 1.3rem;
+    }
+
+    .task-details{
+        padding: 0 0.3rem;
+        margin: 0.1rem 0.3rem 0.3rem 0.3rem;
+        font-size: 1.0rem;
+    }
+
+    .delete-button,
+    .complete-button,
+    .priority-button,
+    .info-button{
+        padding: 0.3rem;
+        font-size: 1.2rem;
+    }
+
+    .select{
+        margin: 0.8rem;
+    }
+    
+    .select::after{
+        padding: 0.3rem;
+    }
+
+    h3{
+        font-size: 0.9rem;
+    }
+
+    .filters{
+        padding: 0.1rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .filter-project,
+    .filter-priority{
+        width: 4rem;
+        padding: 0.3rem;
+        font-size: 0.9rem;
+    }
+    
+    .select-project{
+        width: 4rem;
+        font-size: 0.9rem;
+    }
 }
 
-@media only screen and (max-width:640px){
-    .container{
-        margin: 20px;
-        padding: 20px;
+@media only screen and (max-width:720px){
+    header{
+        min-height: 10vh;
+        font-size: 1.0rem;
     }
 
-    .title{
-        font-size: 23px;
+    .task-input,
+    .task-button,
+    .project-input,
+    .project-button {
+        padding: 0.3rem;
+        font-size: 1.1rem;
     }
 
-    .status-bar{
-        margin-top: 10px;
-        margin-bottom: 10px
+    .project-input,
+    .project-button {
+        font-size: 0.8rem;
+    }
+    
+    .task-form{
+        padding: 0.3rem;
+        font-size: 1.2rem;
+        min-height: 5vh;
+        margin-bottom: 0.2rem;
     }
 
-    .x-score{
-        font-size: 15px;
+    .task-box,
+    .task-details{
+        border-left-width: 3px;
     }
 
-    .status{
-        font-size: 16px;
+    .task-box{
+        margin: 0.2rem;
+        margin-bottom: 0.1rem;
+        padding-bottom: 0rem;
+        font-size: 0.9rem;
     }
 
-    .o-score{
-        font-size: 15px;
+    .task-details{
+        padding: 0 0.3rem;
+        margin: 0.1rem 0.2rem 0.2rem 0.2rem;
+        font-size: 0.7rem;
     }
 
-    .game-grid{
-        grid-gap:4px;
+    .delete-button,
+    .complete-button,
+    .priority-button,
+    .info-button{
+    padding: 0.2rem;
+    font-size: 0.9rem;
     }
 
-    .game-cell{
-        height: 100px;
-        width: 100px;
-        font-size: 70px;
+    .select{
+        margin: 0.6rem;
+    }
+    
+    .select::after{
+        padding: 0.2rem;
     }
 
-    .reset{
-        padding: 1em 0.8em;
-        font-size: 11px;
+    h3{
+        font-size: 0.65rem;
+    }
+
+    .filters{
+        padding: 0.1rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .filter-project,
+    .filter-priority{
+        width: 3rem;
+        padding: 0.2rem;
+        font-size: 0.7rem;
+    }
+    
+    .select-project{
+        width: 3rem;
+        font-size: 0.7rem;
     }
 }
 
